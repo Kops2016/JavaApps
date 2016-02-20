@@ -24,6 +24,10 @@ public class App extends AbstractHandler {
     }
 
     public static void main(String[] args) throws Exception {
+        if(args.length < 1) {
+            System.err.println("Usage: java App <portNo>");
+            System.exit(1);
+        }
         Server server = new Server(Integer.parseInt(args[0]));
         server.setHandler(new App());
 

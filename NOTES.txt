@@ -7,3 +7,58 @@ mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -Darchety
 mvn exec:java -Dexec.mainClass="com.mycompany.app.App"
 
 mvn exec:java -Dexec.mainClass="com.mycompany.app.App" -Dexec.args="8080"
+
+
+
+
+
+http://stackoverflow.com/questions/14894768/git-fetch-vs-pull-merge-vs-rebase
+
+
+fetch vs pull
+fetch will download any changes from the remote* branch, updating your repository data, but leaving your local* branch unchanged.
+
+pull will perform a fetch and additionally merge the changes into your local branch.
+
+What's the difference? pull updates youR local branch with changes from the pulled branch. A fetch does not advance your local branch.
+
+merge vs rebase
+Given the following history:
+
+          C---D---E local
+         /
+    A---B---F---G remote
+merge joins two development histories together. It does this by replaying the changes that occurred on your local branch after it diverged on top of the remote branch, and record the result in a new commit. This operation preserves the ancestry of each commit.
+
+The effect of a merge will be:
+
+          C---D---E local
+         /         \
+    A---B---F---G---H remote
+rebase will take commits that exist in your local branch and re-apply them on top of the remote branch. This operation re-writes the ancestors of your local commits.
+
+The effect of a rebase will be:
+
+                  C'--D'--E' local
+                 /
+    A---B---F---G remote
+What's the difference? A merge does not change the ancestry of commits. A rebase rewrites the ancestry of your local commits.
+
+* This explanation assumes that the current branch is a local branch, and that the branch specified as the argument to fetch, pull, merge, or rebase is a remote branch. This is the usual case. pull, for example, will download any changes from the specified branch, update your repository and merge the changes into the current branch.
+
+
+
+Merge squash merges a tree (a sequence of commits) into a single commit. That is, it squashes all changes made in n commits into a single commit.
+
+Rebasing is re-basing, that is, choosing a new base (parent commit) for a tree. Maybe the mercurial term for this is more clear: they call it transplant because it's just that: picking a new ground (parent commit, root) for a tree.
+
+When doing an interactive rebase, you're given the option to either squash, pick, edit or skip the commits you are going to rebase.
+
+
+
+pull with rebasing instead of merge
+
+I'm actually using rebase quite a lot, but usually it is in combination with pull:
+
+git pull --rebase
+will fetch remote changes and then rebase instead of merge. I.e. it will replay all your local commits from the last time you performed a pull. I find this much cleaner than doing a normal pull with merging, which will create an extra commit with the merges
