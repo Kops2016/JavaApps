@@ -24,7 +24,7 @@ public class App extends AbstractHandler {
     }
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server(8080);
+        Server server = new Server(Integer.parseInt(args[0]));
         server.setHandler(new App());
 
         server.start();
