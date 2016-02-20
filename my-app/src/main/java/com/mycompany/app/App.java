@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 
 public class App extends AbstractHandler {
@@ -21,6 +22,10 @@ public class App extends AbstractHandler {
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
         response.getWriter().println("<h1>Hello World</h1>");
+        Map<String, String> env = System.getenv();
+        for(Map.Entry<String, String> me : env.entrySet()) {
+            response.getWriter().println("<p> " + me.getKey() + " : " + me.getValue() + "</p>");
+        }
     }
 
     public static void main(String[] args) throws Exception {
